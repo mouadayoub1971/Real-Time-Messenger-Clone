@@ -32,7 +32,7 @@ export default function ResetPassword({
         <GuestLayout>
             <Head title="Reset Password" />
 
-            <form onSubmit={submit}>
+            <form onSubmit={submit} className='space-y-4'>
                 <div>
                     <InputLabel htmlFor="email" value="Email" />
 
@@ -49,7 +49,7 @@ export default function ResetPassword({
                     <InputError message={errors.email} className="mt-2" />
                 </div>
 
-                <div className="mt-4">
+                <div >
                     <InputLabel htmlFor="password" value="Password" />
 
                     <TextInput
@@ -66,7 +66,7 @@ export default function ResetPassword({
                     <InputError message={errors.password} className="mt-2" />
                 </div>
 
-                <div className="mt-4">
+                <div >
                     <InputLabel
                         htmlFor="password_confirmation"
                         value="Confirm Password"
@@ -89,8 +89,8 @@ export default function ResetPassword({
                     />
                 </div>
 
-                <div className="mt-4 flex items-center justify-end">
-                    <PrimaryButton className="ms-4" disabled={processing}>
+                <div className="flex">
+                    <PrimaryButton className="w-full" disabled={processing}>
                         Reset Password
                     </PrimaryButton>
                 </div>
