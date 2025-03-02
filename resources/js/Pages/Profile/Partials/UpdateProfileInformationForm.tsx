@@ -5,6 +5,7 @@ import TextInput from "@/components/TextInput";
 import { Transition } from "@headlessui/react";
 import { Link, useForm, usePage } from "@inertiajs/react";
 import { FormEventHandler } from "react";
+import { BsCamera } from "react-icons/bs";
 
 export default function UpdateProfileInformation({
   mustVerifyEmail,
@@ -42,6 +43,12 @@ export default function UpdateProfileInformation({
       </header>
 
       <form onSubmit={submit} className="mt-6 space-y-6">
+        <div className="picture relative">
+          <img src={user.avatar} alt={user.name} className="w-20 h-20 mx-auto rounded-full border border-secondary" />
+          <label htmlFor="avatar" className="btn btn-primary absolute left-1/2 top-6 rounded-full px-2 flex cursor-pointer translate-x-5 items-center justify-center" tabIndex={0}>
+            <BsCamera/>
+          </label>
+        </div>
         <div>
           <InputLabel htmlFor="name" value="Name" />
 
