@@ -4,7 +4,7 @@ import PrimaryButton from "@/components/PrimaryButton";
 import TextInput from "@/components/TextInput";
 import { Transition } from "@headlessui/react";
 import { Link, useForm, usePage } from "@inertiajs/react";
-import { FormEventHandler } from "react";
+import { ChangeEvent, FormEventHandler } from "react";
 import { BsCamera } from "react-icons/bs";
 
 export default function UpdateProfileInformation({
@@ -29,7 +29,13 @@ export default function UpdateProfileInformation({
 
     patch(route("profile.update"));
   };
-
+  const changeAvatar = (e: ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files
+    if (files && files.length > 0) {
+      setData('avatar', files[0])
+      const imageUrl = window.URL.createObjectURL(files[0])
+    }
+  }
   return (
     <section className={className}>
       <header>
@@ -46,7 +52,8 @@ export default function UpdateProfileInformation({
         <div className="picture relative">
           <img src={user.avatar} alt={user.name} className="w-20 h-20 mx-auto rounded-full border border-secondary" />
           <label htmlFor="avatar" className="btn btn-primary absolute left-1/2 top-6 rounded-full px-2 flex cursor-pointer translate-x-5 items-center justify-center" tabIndex={0}>
-            <BsCamera/>
+            <BsCamera />
+            <input type="file" onChange={changeAvatar} id="avatar" className="hidden" />
           </label>
         </div>
         <div>
