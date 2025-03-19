@@ -2,9 +2,10 @@ import InputError from "@/components/InputError";
 import InputLabel from "@/components/InputLabel";
 import PrimaryButton from "@/components/PrimaryButton";
 import TextInput from "@/components/TextInput";
+import { UpdateProfile } from "@/types/user";
 import { Transition } from "@headlessui/react";
 import { Link, useForm, usePage } from "@inertiajs/react";
-import { ChangeEvent, FormEventHandler } from "react";
+import { ChangeEvent, FormEventHandler, useRef } from "react";
 import { BsCamera } from "react-icons/bs";
 
 export default function UpdateProfileInformation({
@@ -17,25 +18,33 @@ export default function UpdateProfileInformation({
   className?: string;
 }) {
   const user = usePage().props.auth.user;
+  const avatarRef = useRef<HTMLImageElement>(null);
 
-  const { data, setData, patch, errors, processing, recentlySuccessful } =
-    useForm({
+  const { data, setData, post, errors, processing, recentlySuccessful } =
+    useForm<UpdateProfile>({
+      _method: "PATCH",
       name: user.name,
       email: user.email,
+      avatar: null,
     });
 
   const submit: FormEventHandler = (e) => {
     e.preventDefault();
 
-    patch(route("profile.update"));
+    post(route("profile.update"));
   };
   const changeAvatar = (e: ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files
+    const files = e.target.files;
     if (files && files.length > 0) {
-      setData('avatar', files[0])
-      const imageUrl = window.URL.createObjectURL(files[0])
+      setData("avatar", files[0]);
+      const imageUrl = window.URL.createObjectURL(files[0]);
+      avatarRef.current?.setAttribute("src", imageUrl);
+
+      return () => {
+        window.URL.revokeObjectURL(imageUrl);
+      };
     }
-  }
+  };
   return (
     <section className={className}>
       <header>
@@ -50,10 +59,24 @@ export default function UpdateProfileInformation({
 
       <form onSubmit={submit} className="mt-6 space-y-6">
         <div className="picture relative">
-          <img src={user.avatar} alt={user.name} className="w-20 h-20 mx-auto rounded-full border border-secondary" />
-          <label htmlFor="avatar" className="btn btn-primary absolute left-1/2 top-6 rounded-full px-2 flex cursor-pointer translate-x-5 items-center justify-center" tabIndex={0}>
+          <img
+            src={user.avatar}
+            alt={user.name}
+            ref={avatarRef}
+            className="mx-auto h-20 w-20 rounded-full border border-secondary"
+          />
+          <label
+            htmlFor="avatar"
+            className="btn btn-primary absolute left-1/2 top-6 flex translate-x-5 cursor-pointer items-center justify-center rounded-full px-2"
+            tabIndex={0}
+          >
             <BsCamera />
-            <input type="file" onChange={changeAvatar} id="avatar" className="hidden" />
+            <input
+              type="file"
+              onChange={changeAvatar}
+              id="avatar"
+              className="hidden"
+            />
           </label>
         </div>
         <div>
