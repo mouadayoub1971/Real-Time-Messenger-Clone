@@ -2,7 +2,7 @@ import InputError from "@/components/InputError";
 import InputLabel from "@/components/InputLabel";
 import PrimaryButton from "@/components/PrimaryButton";
 import TextInput from "@/components/TextInput";
-import { UpdateProfile } from "@/types/user";
+import {  UpdateProfileSchema } from "@/types/user";
 import { Transition } from "@headlessui/react";
 import { Link, useForm, usePage } from "@inertiajs/react";
 import { ChangeEvent, FormEventHandler, useRef } from "react";
@@ -21,7 +21,7 @@ export default function UpdateProfileInformation({
   const avatarRef = useRef<HTMLImageElement>(null);
 
   const { data, setData, post, errors, processing, recentlySuccessful } =
-    useForm<UpdateProfile>({
+    useForm<UpdateProfileSchema>({
       _method: "PATCH",
       name: user.name,
       email: user.email,

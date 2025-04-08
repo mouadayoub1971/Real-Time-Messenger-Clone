@@ -14,16 +14,13 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, HasUuids;
 
-    /**
-     * The attributes that are mass assignable.
+     /**
+     * The attributes that aren't mass assignable.
      *
-     * @var list<string>
+     * @var array<int, string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    protected $guarded = ['id'];
+
 
     /**
      * The attributes that should be hidden for serialization.
