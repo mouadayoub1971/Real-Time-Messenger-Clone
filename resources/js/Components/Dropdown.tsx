@@ -53,10 +53,10 @@ const Trigger = ({ children }: PropsWithChildren) => {
 const Content = ({
   align = "right",
   width = "48",
-  contentClasses = "py-1 bg-white",
+  contentClasses = "py-1 bg-background",
   children,
 }: PropsWithChildren<{
-  align?: "left" | "right";
+  align?: "left" | "right" | "top-left" | "top-right";
   width?: "48";
   contentClasses?: string;
 }>) => {
@@ -65,9 +65,13 @@ const Content = ({
   let alignmentClasses = "origin-top";
 
   if (align === "left") {
-    alignmentClasses = "ltr:origin-top-left rtl:origin-top-right start-0";
+    alignmentClasses = "origin-top-left end-0 sm:start-0 mt-2";
   } else if (align === "right") {
-    alignmentClasses = "ltr:origin-top-right rtl:origin-top-left end-0";
+    alignmentClasses = "origin-top-right end-0 mt-2";
+  } else if (align === "top-left") {
+    alignmentClasses = "origin-bottom-left bottom-0 end-0 sm:start-0 mb-2";
+  } else if (align === "top-right") {
+    alignmentClasses = "origin-bottom-right bottom-0 end-0 mb-2";
   }
 
   let widthClasses = "";

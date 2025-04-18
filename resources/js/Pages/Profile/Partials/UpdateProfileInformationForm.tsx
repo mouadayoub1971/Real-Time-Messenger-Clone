@@ -2,6 +2,7 @@ import InputError from "@/components/InputError";
 import InputLabel from "@/components/InputLabel";
 import PrimaryButton from "@/components/PrimaryButton";
 import TextInput from "@/components/TextInput";
+import { PageProps } from "@/types";
 import {  UpdateProfileSchema } from "@/types/user";
 import { Transition } from "@headlessui/react";
 import { Link, useForm, usePage } from "@inertiajs/react";
@@ -17,14 +18,14 @@ export default function UpdateProfileInformation({
   status?: string;
   className?: string;
 }) {
-  const user = usePage().props.auth.user;
+  const {auth} = usePage<PageProps>().props;
   const avatarRef = useRef<HTMLImageElement>(null);
 
   const { data, setData, post, errors, processing, recentlySuccessful } =
     useForm<UpdateProfileSchema>({
       _method: "PATCH",
-      name: user.name,
-      email: user.email,
+      name: auth.name,
+      email: auth.email,
       avatar: null,
     });
 
@@ -60,8 +61,8 @@ export default function UpdateProfileInformation({
       <form onSubmit={submit} className="mt-6 space-y-6">
         <div className="picture relative">
           <img
-            src={user.avatar}
-            alt={user.name}
+            src={auth.avatar}
+            alt={auth.name}
             ref={avatarRef}
             className="mx-auto h-20 w-20 rounded-full border border-secondary"
           />
@@ -107,11 +108,10 @@ export default function UpdateProfileInformation({
             required
             autoComplete="username"
           />
-
           <InputError className="mt-2" message={errors.email} />
         </div>
 
-        {mustVerifyEmail && user.email_verified_at === null && (
+        {mustVerifyEmail && auth.email_verified_at === null && (
           <div>
             <p className="mt-2 text-sm text-foreground">
               Your email address is unverified.
@@ -135,7 +135,6 @@ export default function UpdateProfileInformation({
 
         <div className="flex items-center gap-4">
           <PrimaryButton disabled={processing}>Save</PrimaryButton>
-
           <Transition
             show={recentlySuccessful}
             enter="transition ease-in-out"
