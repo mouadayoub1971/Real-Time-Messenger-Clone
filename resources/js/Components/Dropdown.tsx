@@ -4,6 +4,7 @@ import {
   createContext,
   Dispatch,
   PropsWithChildren,
+  ButtonHTMLAttributes,
   SetStateAction,
   useContext,
   useState,
@@ -92,12 +93,12 @@ const Content = ({
         leaveTo="opacity-0 scale-95"
       >
         <div
-          className={`absolute z-50 mt-2 rounded-md shadow-lg ${alignmentClasses} ${widthClasses}`}
+          className={`absolute z-50 mt-2    ${alignmentClasses} ${widthClasses}`}
           onClick={() => setOpen(false)}
         >
           <div
             className={
-              `rounded-md ring-1 ring-black ring-opacity-5 ` + contentClasses
+              `rounded-lg bg-background !p-2 shadow-md ring-1 ring-black ring-opacity-5 dark:ring-white dark:ring-opacity-5 ` + contentClasses
             }
           >
             {children}
@@ -117,7 +118,7 @@ const DropdownLink = ({
     <Link
       {...props}
       className={
-        "block w-full px-4 py-2 text-start text-sm leading-5 text-foreground transition duration-150 ease-in-out hover:bg-gray-100 focus:bg-gray-100 focus:outline-none " +
+        "block w-full px-4 py-2 text-start text-sm leading-5 text-foreground transition duration-150 ease-in-out hover:bg-secondary focus:bg-secondary focus:outline-none " +
         className
       }
     >
@@ -126,8 +127,22 @@ const DropdownLink = ({
   );
 };
 
+const DropdownButton = ({
+  className = "",
+  children,
+  ...props
+}: PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement>>) => {
+  return (
+    <button {...props} className={
+      "block w-full px-4 py-2 text-start text-sm leading-5 text-foreground transition duration-150 ease-in-out hover:bg-secondary focus:bg-secondary focus:outline-none " +
+      className} >
+      {children}
+    </button>
+  )
+}
 Dropdown.Trigger = Trigger;
 Dropdown.Content = Content;
 Dropdown.Link = DropdownLink;
+Dropdown.Button = DropdownButton;
 
 export default Dropdown;

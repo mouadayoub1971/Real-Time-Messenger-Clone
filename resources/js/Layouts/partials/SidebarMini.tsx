@@ -1,9 +1,10 @@
 import { Link, usePage } from "@inertiajs/react"
 import clsx from "clsx";
 import Dropdown from "@/components/Dropdown";
-import { BsArchive, BsChat, BsPeople } from "react-icons/bs"
+import { BsArchive, BsBoxArrowRight, BsChat, BsGear, BsPeople, BsPersonCircle } from "react-icons/bs"
 import BadgeNotification from "@/components/chats/BadgeNotification";
 import { PageProps } from "@/types";
+import { profile } from "console";
 
 export default function SidebarMini() {
   const { auth } = usePage<PageProps>().props;
@@ -29,9 +30,21 @@ export default function SidebarMini() {
               />
           </Dropdown.Trigger>
           <Dropdown.Content align="top-left" contentClasses=" mb-12 sm:mb-10">
-            <Dropdown.Link href="" className="flex gap-2 items-center">
-              <BsArchive className="h-6 w-6" />
-              <span>preferneces</span>
+            <Dropdown.Button  className="flex gap-2 items-center">
+              <BsGear />
+              <div>Preferences</div>
+            </Dropdown.Button>
+            <Dropdown.Link href={route("profile.edit")}>
+              <div className="flex gap-2 items-center">
+                <BsPersonCircle />
+                Profile
+              </div>
+            </Dropdown.Link>
+            <Dropdown.Link href={route("logout")} method="post" as="button">
+              <div className="flex gap-2 items-center">
+                <BsBoxArrowRight />
+                Log out 
+              </div>
             </Dropdown.Link>
           </Dropdown.Content>
       </Dropdown>
