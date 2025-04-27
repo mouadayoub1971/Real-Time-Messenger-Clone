@@ -5,7 +5,7 @@ export default function AppLayout({title, children} : PropsWithChildren<{title: 
   return (
     <>
       <Head title={title} />
-      <div className="flex flex-row h-screen bg-background text-foreground ">{ children}</div>
+      <div className="flex flex-col sm:flex-row h-screen bg-background text-foreground ">{ children}</div>
     </>
   )
 }

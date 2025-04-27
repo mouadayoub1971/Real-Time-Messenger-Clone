@@ -43,7 +43,7 @@ export default function SidebarMini() {
             <Dropdown.Link href={route("logout")} method="post" as="button">
               <div className="flex gap-2 items-center">
                 <BsBoxArrowRight />
-                Log out 
+                Log out
               </div>
             </Dropdown.Link>
           </Dropdown.Content>
